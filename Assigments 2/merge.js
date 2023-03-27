@@ -3,6 +3,8 @@ function merge(firstArray, secondArray, sizeFirst, sizeSecond) {
   let j = 0;
   let k = 0;
 
+  // console.log(firstArray, secondArray, sizeFirst, sizeSecond);
+
   let sortedList = [];
 
   while (i <= sizeFirst && j <= sizeSecond)
@@ -19,6 +21,10 @@ function merge(firstArray, secondArray, sizeFirst, sizeSecond) {
   for (; j <= sizeSecond; j++) {
     sortedList[k++] = secondArray[j];
   }
+
+  console.log(sortedList);
+
+  return sortedList;
 }
 
 function mergeSort(arr) {
@@ -28,10 +34,21 @@ function mergeSort(arr) {
   if (firstElement < lastElement) {
     let midElement = Math.floor((firstElement + lastElement) / 2);
 
-    let firstHalf = mergeSort([arr[0], arr[1], arr[2], arr[3]]);
-    let secondHalf = mergeSort([arr[4], arr[5], arr[6], arr[7]]);
+    let firstArray = [];
+    let secondArray = [];
 
-    return merge(firstHalf, secondHalf, firstHalf.length, secondHalf.length);
+    for (let i = 0; i <= midElement; i++) {
+      firstArray.push(arr[i]);
+    }
+
+    for (let j = midElement + 1; j <= lastElement; j++) {
+      secondArray.push(arr[j]);
+    }
+    mergeSort(firstArray);
+    mergeSort(secondArray);
+    merge(firstArray, secondArray, firstArray.length - 1, secondArray.length - 1);
+  } else {
+    return;
   }
 }
 
