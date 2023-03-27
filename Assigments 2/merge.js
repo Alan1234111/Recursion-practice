@@ -27,10 +27,7 @@ function merge(firstArray, secondArray, sizeFirst, sizeSecond) {
   return sortedList;
 }
 
-function mergeSort(arr) {
-  const firstElement = 0;
-  const lastElement = arr.length - 1;
-
+function mergeSort(low, high) {
   if (firstElement < lastElement) {
     let midElement = Math.floor((firstElement + lastElement) / 2);
 
@@ -44,9 +41,10 @@ function mergeSort(arr) {
     for (let j = midElement + 1; j <= lastElement; j++) {
       secondArray.push(arr[j]);
     }
-    mergeSort(firstArray);
-    mergeSort(secondArray);
-    merge(firstArray, secondArray, firstArray.length - 1, secondArray.length - 1);
+
+    mergeSort();
+    mergeSort(firstElement);
+    merge();
   } else {
     return;
   }
