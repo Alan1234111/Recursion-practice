@@ -1,54 +1,66 @@
-function merge(firstArray, secondArray, sizeFirst, sizeSecond) {
+function merge(array, low, mid, high) {
+  let firstSubArray = mid - low + 1;
+  let secondSubArray = high - mid;
+
+  // Create temp arrays
+  let firstArray = new Array(firstSubArray);
+  let secondArray = new Array(secondSubArray);
+
+  // Copy data to temp arrays firstArray[] and secondArray[]
+  for (let i = 0; i < firstSubArray; i++) firstArray[i] = array[low + i];
+  for (let j = 0; j < secondSubArray; j++) secondArray[j] = array[mid + 1 + j];
+
+  // Merge the temp arrays back into arr[low..high]
+
+  // Initial index of first subarray
   let i = 0;
+
+  // Initial index of second subarray
   let j = 0;
-  let k = 0;
 
-  // console.log(firstArray, secondArray, sizeFirst, sizeSecond);
+  // Initial index of merged subarray
+  let k = low;
 
-  let sortedList = [];
-
-  while (i <= sizeFirst && j <= sizeSecond)
-    if (firstArray[i] < secondArray[j]) {
-      sortedList[k++] = firstArray[i++];
+  while (i < firstSubArray && j < secondSubArray) {
+    if (firstArray[i] <= secondArray[j]) {
+      array[k] = firstArray[i];
+      i++;
     } else {
-      sortedList[k++] = secondArray[j++];
+      array[k] = secondArray[j];
+      j++;
     }
-
-  for (; i <= sizeFirst; i++) {
-    sortedList[k++] = firstArray[i];
+    k++;
   }
 
-  for (; j <= sizeSecond; j++) {
-    sortedList[k++] = secondArray[j];
+  // Copy the remaining elements of
+  // firstArray[], if there are any
+  while (i < firstSubArray) {
+    array[k] = firstArray[i];
+    i++;
+    k++;
   }
 
-  console.log(sortedList);
-
-  return sortedList;
+  // Copy the remaining elements of
+  // secondSubArray[], if there are any
+  while (j < secondSubArray) {
+    array[k] = secondArray[j];
+    j++;
+    k++;
+  }
 }
 
-function mergeSort(low, high) {
-  if (firstElement < lastElement) {
-    let midElement = Math.floor((firstElement + lastElement) / 2);
-
-    let firstArray = [];
-    let secondArray = [];
-
-    for (let i = 0; i <= midElement; i++) {
-      firstArray.push(arr[i]);
-    }
-
-    for (let j = midElement + 1; j <= lastElement; j++) {
-      secondArray.push(arr[j]);
-    }
-
-    mergeSort();
-    mergeSort(firstElement);
-    merge();
-  } else {
+function mergeSort(array, low, high) {
+  if (low >= high) {
     return;
   }
+  let mid = low + parseInt((high - low) / 2);
+
+  mergeSort(array, low, mid);
+  mergeSort(array, mid + 1, high);
+  merge(array, low, mid, high);
+  return array;
 }
 
 let arr = [9, 3, 7, 5, 6, 4, 8, 2];
-console.log(mergeSort(arr));
+const arrSize = arr.length;
+console.log(mergeSort(arr, 0, arrSize - 1));
